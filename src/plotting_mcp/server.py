@@ -21,7 +21,9 @@ from plotting_mcp.utils import sizeof_fmt
 
 logger = structlog.get_logger(__name__)
 
-mcp = FastMCP(name="plotting-mcp", host="0.0.0.0", port=MCP_PORT)
+# Initialize FastMCP without host/port for cloud compatibility
+# These will be set by the cloud platform or at runtime
+mcp = FastMCP(name="plotting-mcp")
 
 
 @mcp.tool()
@@ -124,10 +126,14 @@ def main(log_level: str = "INFO", reload: bool = False, transport: str = "http")
     if transport == "stdio":
         mcp.run("stdio")
     elif transport == "http":
+        # Set host and port for local execution
+        host = "0.0.0.0"
+        port = int(MCP_PORT)
+
         uvicorn.run(
             "plotting_mcp.server:starlette_app",
-            host=mcp.settings.host,
-            port=mcp.settings.port,
+            host=host,
+            port=port,
             log_config=logging_dict,
             reload=reload,
             reload_dirs=[str(Path(__file__).parent.absolute())],
