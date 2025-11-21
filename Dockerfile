@@ -55,8 +55,11 @@ RUN groupadd --gid 1000 app && \
 WORKDIR /app
 RUN chown app:app /app
 
-# Copy the environment, but not the source code
+# Copy the virtual environment
 COPY --from=builder --chown=app:app /app/.venv /app/.venv
+
+# Copy source code for FastMCP Cloud inspect
+COPY --from=builder --chown=app:app /app/src /app/src
 
 # Copy Cartopy data cache from builder stage
 ENV CARTOPY_DATA_DIR=/app/cartopy-data

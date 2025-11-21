@@ -17,6 +17,7 @@ classifiers = [
     "License :: OSI Approved :: Apache Software License",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
 ]
 dependencies = [
     "cartopy>=0.24.1",
@@ -45,7 +46,7 @@ where = ["src/plotting_mcp"]
 
 [tool.ruff]
 line-length = 100
-target-version = "py313"
+target-version = "py312"
 lint.select = [
     "E", # pycodestyle errors
     "W", # pycodestyle warnings
