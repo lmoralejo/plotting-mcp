@@ -1,5 +1,10 @@
 """Cloud-specific entrypoint for FastMCP Cloud deployment."""
 
+# Apply nest_asyncio FIRST to allow nested event loops
+# This fixes "Already running asyncio in this thread" error with fastmcp inspect
+import nest_asyncio
+nest_asyncio.apply()
+
 import base64
 import io
 import json
